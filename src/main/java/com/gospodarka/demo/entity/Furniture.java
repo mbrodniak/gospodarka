@@ -22,6 +22,7 @@ public class Furniture {
     @Column(name = "description")
     private String description;
 
+
     public Furniture()
     {
 
@@ -47,7 +48,5 @@ public class Furniture {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-
-
 
 }

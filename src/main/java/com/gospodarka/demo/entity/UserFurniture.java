@@ -3,10 +3,10 @@ package com.gospodarka.demo.entity;
 import javax.persistence.*;
 
 @Entity(name = "user_furniture")
+@IdClass(UserFurniturePK.class)
 public class UserFurniture {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userid")
     int userId;
     @Column(name = "furnitureid")
@@ -30,4 +30,5 @@ public class UserFurniture {
     public void setFurnitureId(int furnitureId) {
         this.furnitureId = furnitureId;
     }
+
 }
