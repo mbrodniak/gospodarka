@@ -1,6 +1,8 @@
 package com.gospodarka.demo.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "user")
 public class User {
@@ -19,6 +21,15 @@ public class User {
     String name;
     @Column(name = "vorname")
     String vorname;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_furniture",
+            joinColumns = {@JoinColumn(name = "userid")},
+            inverseJoinColumns = {@JoinColumn(name = "furnitureid")}
+    )
+    List<Furniture> furnitures = new ArrayList<>();
+
 
     public User() {
     }
@@ -69,5 +80,13 @@ public class User {
 
     public void setVorname(String vorname) {
         this.vorname = vorname;
+    }
+
+    public List<Furniture> getFurnitures() {
+        return furnitures;
+    }
+
+    public void setFurnitures(List<Furniture> furnitures) {
+        this.furnitures = furnitures;
     }
 }
