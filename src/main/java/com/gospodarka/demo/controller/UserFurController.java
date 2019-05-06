@@ -22,7 +22,6 @@ public class UserFurController {
     }
 
     @GetMapping(path = "/user")
-    public List<UserFurniture> findByUserId(@RequestParam int id){
-        return userFurRepository.findByUserId(id);
-    }
+    public List<UserFurniture> findByUserId(@RequestParam int id){ return userFurRepository.findByUserId(id); }
+
 }

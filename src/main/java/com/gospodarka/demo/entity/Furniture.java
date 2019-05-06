@@ -22,11 +22,12 @@ public class Furniture {
     @Column(name = "description")
     private String description;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id",referencedColumnName = "furnitureid")
+    private Transform transform;
 
-    public Furniture()
-    {
 
-    }
+    public Furniture(){}
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -48,5 +49,8 @@ public class Furniture {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public Transform getTransform() { return transform; }
+    public void setTransform(Transform transform) { this.transform = transform; }
 
 }

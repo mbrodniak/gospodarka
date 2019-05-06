@@ -13,4 +13,7 @@ public interface UserFurRepository extends JpaRepository<UserFurniture, Integer>
 
     @Query(value = "select * from user_furniture where userid = ?1", nativeQuery = true)
     List<UserFurniture> findByUserId(int userId);
+
+
+
 }

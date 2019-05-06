@@ -18,7 +18,8 @@ public class Transform {
     @Column(name = "furnitureid")
     private int furnitureId;
 
-    public Transform(){}
+    public Transform() {    }
+
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -34,7 +35,5 @@ public class Transform {
 
     public int getFurnitureId() { return furnitureId; }
     public void setFurnitureId(int furnitureId) { this.furnitureId = furnitureId; }
-
-
 
 }

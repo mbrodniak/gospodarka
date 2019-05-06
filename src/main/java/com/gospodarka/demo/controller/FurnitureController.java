@@ -5,6 +5,7 @@ import com.gospodarka.demo.repository.FurnitureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,5 +19,8 @@ public class FurnitureController {
 
     @GetMapping(path = "/all")
     public List<Furniture> findAll() { return furnitureRepository.findAll(); }
+
+    @GetMapping(path = "/fur")
+    public List<Furniture> findById(@RequestParam int id){ return furnitureRepository.findById(id); }
 
 }

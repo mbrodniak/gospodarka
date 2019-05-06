@@ -9,4 +9,5 @@ import java.util.List;
 public interface TransformRepository extends JpaRepository<Transform,Integer> {
 
     List<Transform> findAll();
+    List<Transform> findByFurnitureId(int furnitureId);
 }
