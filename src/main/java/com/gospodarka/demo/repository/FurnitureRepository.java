@@ -16,4 +16,6 @@ public interface FurnitureRepository extends JpaRepository<Furniture,Integer>{
     List<Furniture> findById(int id);
 
 
+
+
 }

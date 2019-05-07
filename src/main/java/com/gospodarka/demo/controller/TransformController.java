@@ -3,10 +3,8 @@ package com.gospodarka.demo.controller;
 import com.gospodarka.demo.entity.Transform;
 import com.gospodarka.demo.repository.TransformRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 
@@ -23,7 +21,12 @@ public class TransformController {
     @GetMapping(path = "/fur")
     public List<Transform> findByFurnitureId(@RequestParam int furnitureId){ return transformRepository.findByFurnitureId(furnitureId); }
 
-
+    @PostMapping(path = "/new")
+    public List<Transform> addTransform (@RequestBody Transform transform)
+    {
+        transformRepository.save(transform);
+        return transformRepository.findAll();
+    }
 
 
 
