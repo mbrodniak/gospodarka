@@ -1,5 +1,6 @@
 package com.gospodarka.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity(name = "furniture")
@@ -24,6 +25,7 @@ public class Furniture {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id",referencedColumnName = "furnitureid")
+    @JsonIgnoreProperties({ "id", "furnitureId" })
     private Transform transform;
 
 
