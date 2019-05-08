@@ -14,6 +14,8 @@ public interface FurnitureRepository extends JpaRepository<Furniture,Integer>{
 
     @Query(value = "select * from furniture where id = ?1", nativeQuery = true)
     List<Furniture> findById(int id);
+    Furniture save(Furniture furniture);
+
 
 
 

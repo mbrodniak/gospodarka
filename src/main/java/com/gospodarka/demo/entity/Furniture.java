@@ -1,6 +1,8 @@
 package com.gospodarka.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gospodarka.demo.dto.FurnitureDTO;
+
 import javax.persistence.*;
 
 @Entity(name = "furniture")
@@ -30,6 +32,17 @@ public class Furniture {
 
 
     public Furniture(){}
+
+    public Furniture(FurnitureDTO furnitureDTO){
+
+        this.name = furnitureDTO.getName();
+        this.location = furnitureDTO.getLocation();
+        this.texture = furnitureDTO.getTexture();
+        this.icon = furnitureDTO.getIcon();
+        this.category = furnitureDTO.getCategory();
+        this.description = furnitureDTO.getDescription();
+
+    }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

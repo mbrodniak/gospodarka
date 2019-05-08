@@ -1,12 +1,13 @@
 package com.gospodarka.demo.entity;
 
+import com.gospodarka.demo.dto.TransformDTO;
 import javax.persistence.*;
 
 @Entity(name = "transform")
 public class Transform {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name = "x")
@@ -19,6 +20,15 @@ public class Transform {
     private int furnitureId;
 
     public Transform() {    }
+
+    public Transform(TransformDTO transformDTO){
+
+        //this.id = transformDTO.getId();
+        this.x = transformDTO.getX();
+        this.y = transformDTO.getY();
+        this.z = transformDTO.getZ();
+        this.furnitureId = transformDTO.getFurnitureId();
+    }
 
 
     public int getId() { return id; }
