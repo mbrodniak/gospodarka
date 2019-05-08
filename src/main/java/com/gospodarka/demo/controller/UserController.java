@@ -1,20 +1,23 @@
 package com.gospodarka.demo.controller;
 
+import com.gospodarka.demo.dto.UserDTO;
 import com.gospodarka.demo.entity.User;
 import com.gospodarka.demo.repository.UserRepository;
 import java.util.List;
+import com.gospodarka.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/user")
+@CrossOrigin(value = "http://localhost:4200")
 public class UserController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping(path = "/all")
     public List<User> findAll(){
@@ -24,5 +27,10 @@ public class UserController {
     @GetMapping(path = "/user")
     public List<User> findById(@RequestParam int id) { return userRepository.findById(id);  }
 
+    @PostMapping(path = "/add")
+    public User addUser(@RequestBody UserDTO userDTO){
+        User user = userService.setUser(userDTO);
+        return userRepository.save(user);
+    }
 
 }

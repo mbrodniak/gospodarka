@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(path= "transform")
+@RequestMapping(path= "/transform")
 public class TransformController {
 
     @Autowired
