@@ -1,5 +1,7 @@
 package com.gospodarka.demo.entity;
 
+import com.gospodarka.demo.dto.UserDTO;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,17 @@ public class User {
 
 
     public User() {
+    }
+
+    public User(UserDTO userDTO) {
+
+//        this.id = userDTO.getId();
+        this.login = userDTO.getLogin();
+        this.password = userDTO.getPassword();
+        this.email = userDTO.getEmail();
+        this.name = userDTO.getName();
+        this.vorname = userDTO.getVorname();
+
     }
 
     public int getId() {
