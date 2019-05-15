@@ -7,7 +7,6 @@ import javax.persistence.*;
 public class Transform {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name = "x")
@@ -23,7 +22,7 @@ public class Transform {
 
     public Transform(TransformDTO transformDTO){
 
-        //this.id = transformDTO.getId();
+        this.id = transformDTO.getFurnitureId();
         this.x = transformDTO.getX();
         this.y = transformDTO.getY();
         this.z = transformDTO.getZ();

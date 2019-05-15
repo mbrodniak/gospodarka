@@ -2,17 +2,17 @@ package com.gospodarka.demo.dto;
 
 public class TransformDTO {
 
-    //private int id;
+    private int id;
     private float x;
     private float y;
     private float z;
     private int furnitureId;
 
     public TransformDTO() {    }
-/*
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
-*/
+
     public float getX() { return x; }
     public void setX(float x) { this.x = x; }
 
