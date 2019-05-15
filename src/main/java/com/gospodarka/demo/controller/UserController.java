@@ -33,4 +33,8 @@ public class UserController {
         return userRepository.save(user);
     }
 
+    @GetMapping(path = "/login")
+    public User getUser(@RequestParam String login, @RequestParam String password){
+        return userRepository.getUserByLoginAndPassword(login, password);
+    }
 }
