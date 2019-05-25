@@ -2,55 +2,63 @@ package com.gospodarka.demo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DriverManagerDataSource driverManagerDataSource(){
+
+        DriverManagerDataSource driverManager = new DriverManagerDataSource();
+        driverManager.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        driverManager.setUrl("URL");
+        driverManager.setUsername("USERNAME");
+        driverManager.setPassword("PASSWORD");
+
+        return driverManager;
+    }
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable().authorizeRequests().antMatchers("/**").permitAll()
-                .and().httpBasic();
+        httpSecurity
+                .csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .permitAll()
+                .antMatchers("/login", "/add")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
 
     }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-//        authenticationManagerBuilder.inMemoryAuthentication()
-//                .withUser("user")
-//                .password("{noop}password")
-//                .roles("USER");
-//    }
+    @Override
+    protected void configure(final AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.jdbcAuthentication().dataSource(driverManagerDataSource())
+                .usersByUsernameQuery("select login, password, enabled from user where login =?")
+                .authoritiesByUsernameQuery("select login, user_role from user where login=?")
+                .passwordEncoder(passwordEncoder());
+    }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication()
-//                .dataSource(dataSource())
-//                .passwordEncoder(passwordEncoder())
-//                .usersByUsernameQuery("select login, password from user where login=?")
-//                .authoritiesByUsernameQuery("select login from user where login=?");
-//    }
 
-//    @Bean(name = "dataSource")
-//    public DriverManagerDataSource dataSource() {
-//        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-//
-//        driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-//        driverManagerDataSource.setUrl("jdbc:mysql://127.0.0.1:3306/gospodarka?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true");
-//        driverManagerDataSource.setUsername("root");
-//        driverManagerDataSource.setPassword("Kolega66.");
-//
-//        return driverManagerDataSource;
-//    }
-//        @Bean
-//        public static BCryptPasswordEncoder passwordEncoder(){
-//            return new BCryptPasswordEncoder();
-//        }
 
 }
