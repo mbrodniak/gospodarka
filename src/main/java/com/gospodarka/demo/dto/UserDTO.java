@@ -7,6 +7,8 @@ public class UserDTO {
     String email;
     String name;
     String vorname;
+    int enabled;
+    String userRole;
 
     public UserDTO() {
     }
@@ -49,5 +51,21 @@ public class UserDTO {
 
     public void setVorname(String vorname) {
         this.vorname = vorname;
+    }
+
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 }

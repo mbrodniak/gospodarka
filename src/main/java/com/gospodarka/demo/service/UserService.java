@@ -11,8 +11,10 @@ public class UserService {
 
 
     public User setUser(UserDTO userDTO){
-
+        userDTO.setEnabled(1);
+        userDTO.setUserRole("ROLE_USER");
         User user = new User(userDTO);
+
 //        user.setPassword(passwordEncoder().encode(userDTO.getPassword()));
         return user;
     }

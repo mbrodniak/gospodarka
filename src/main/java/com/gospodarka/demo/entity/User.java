@@ -23,6 +23,11 @@ public class User {
     String name;
     @Column(name = "vorname")
     String vorname;
+    @Column(name = "enabled")
+    int enabled;
+    @Column(name = "user_role")
+    String userRole;
+
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -44,6 +49,8 @@ public class User {
         this.email = userDTO.getEmail();
         this.name = userDTO.getName();
         this.vorname = userDTO.getVorname();
+        this.enabled = userDTO.getEnabled();
+        this.userRole = userDTO.getUserRole();
 
     }
 
@@ -94,6 +101,14 @@ public class User {
     public void setVorname(String vorname) {
         this.vorname = vorname;
     }
+
+    public int getEnabled() { return enabled; }
+
+    public void setEnabled(int enabled) { this.enabled = enabled; }
+
+    public String getUserRole() { return userRole; }
+
+    public void setUserRole(String userRole) { this.userRole = userRole; }
 
     public List<Furniture> getFurnitures() {
         return furnitures;

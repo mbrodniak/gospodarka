@@ -1,5 +1,7 @@
 package com.gospodarka.demo.entity;
 
+import com.gospodarka.demo.dto.UserFurnitureDTO;
+
 import javax.persistence.*;
 
 @Entity(name = "user_furniture")
@@ -13,6 +15,13 @@ public class UserFurniture {
     int furnitureId;
 
     public UserFurniture() {
+    }
+
+    public UserFurniture(UserFurnitureDTO userFurnitureDTO){
+
+        this.userId = userFurnitureDTO.getUserId();
+        this.furnitureId = userFurnitureDTO.getFurnitureId();
+
     }
 
     public int getUserId() {
