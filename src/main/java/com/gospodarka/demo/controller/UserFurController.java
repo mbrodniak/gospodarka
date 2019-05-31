@@ -33,4 +33,16 @@ public class UserFurController {
         UserFurniture userFurniture = userFurService.setFurniture(userFurnitureDTO);
         return userFurRepository.save(userFurniture);
     }
+    @PostMapping(path = "/delete")
+    public void deleteUserFurniture(@RequestBody UserFurniture userFurniture)
+    {
+        System.out.println(userFurniture.getFurnitureId() + ", " + userFurniture.getUserId());
+        if(userFurniture!=null && userFurRepository.existsByFurnitureIdAndAndUserId(userFurniture.getFurnitureId(), userFurniture.getUserId()) ){
+            userFurRepository.delete(userFurniture);
+        }
+        else{
+            System.out.println("Nie można usunąc mebla, który nie istnieje");
+        }
+    }
+
 }
