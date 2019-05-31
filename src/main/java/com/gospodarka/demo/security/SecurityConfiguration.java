@@ -1,5 +1,6 @@
 package com.gospodarka.demo.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,14 +23,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    private AuthenticationEntryPoint authEntryPoint;
+
     @Bean
     public DriverManagerDataSource driverManagerDataSource(){
 
         DriverManagerDataSource driverManager = new DriverManagerDataSource();
         driverManager.setDriverClassName("com.mysql.cj.jdbc.Driver");
         driverManager.setUrl("URL");
-        driverManager.setUsername("USERNAME");
-        driverManager.setPassword("PASSWORD");
+        driverManager.setUsername("root");
+        driverManager.setPassword("password");
 
         return driverManager;
     }
@@ -40,14 +44,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**")
-                .permitAll()
-                .antMatchers("/login", "/add")
-                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .authenticationEntryPoint(authEntryPoint);
 
     }
 

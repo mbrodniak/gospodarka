@@ -16,5 +16,8 @@ public interface UserFurRepository extends JpaRepository<UserFurniture, Integer>
     UserFurniture save(UserFurniture userFurniture);
 
 
+    boolean existsByFurnitureIdAndAndUserId(int furId, int userId);
+
+
 
 }
