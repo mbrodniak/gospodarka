@@ -7,7 +7,7 @@ public class UserDTO {
     String email;
     String name;
     String vorname;
-    int enabled;
+    boolean enabled;
     String userRole;
 
     public UserDTO() {
@@ -53,11 +53,11 @@ public class UserDTO {
         this.vorname = vorname;
     }
 
-    public int getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(int enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
