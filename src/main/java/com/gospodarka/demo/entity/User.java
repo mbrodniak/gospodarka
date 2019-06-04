@@ -24,7 +24,7 @@ public class User {
     @Column(name = "vorname")
     String vorname;
     @Column(name = "enabled")
-    int enabled;
+    boolean enabled;
     @Column(name = "user_role")
     String userRole;
 
@@ -102,9 +102,9 @@ public class User {
         this.vorname = vorname;
     }
 
-    public int getEnabled() { return enabled; }
+    public boolean getEnabled() { return enabled; }
 
-    public void setEnabled(int enabled) { this.enabled = enabled; }
+    public void setEnabled(boolean enabled) { this.enabled = enabled; }
 
     public String getUserRole() { return userRole; }
 
@@ -116,5 +116,20 @@ public class User {
 
     public void setFurnitures(List<Furniture> furnitures) {
         this.furnitures = furnitures;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", vorname='" + vorname + '\'' +
+                ", enabled=" + enabled +
+                ", userRole='" + userRole + '\'' +
+                ", furnitures=" + furnitures +
+                '}';
     }
 }

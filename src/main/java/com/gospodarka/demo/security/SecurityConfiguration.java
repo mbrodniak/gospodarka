@@ -1,20 +1,25 @@
 package com.gospodarka.demo.security;
 
+import com.gospodarka.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
@@ -23,43 +28,41 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationEntryPoint getBasicAuthEntryPoint(){
+        return new AuthenticationEntryPoint();
+    }
+
     @Autowired
-    private AuthenticationEntryPoint authEntryPoint;
+    private UserService userService;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(authenticationProvider());
+    }
 
     @Bean
-    public DriverManagerDataSource driverManagerDataSource(){
+    public DaoAuthenticationProvider authenticationProvider() {
 
-        DriverManagerDataSource driverManager = new DriverManagerDataSource();
-        driverManager.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        driverManager.setUrl("URL");
-        driverManager.setUsername("root");
-        driverManager.setPassword("password");
-
-        return driverManager;
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
     }
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .csrf()
-                .disable()
-                .authorizeRequests()
+    protected void configure(HttpSecurity http) throws Exception
+    {
+        http.addFilterBefore(new CorsConfiguration(), ChannelProcessingFilter.class);
+        http.
+                authorizeRequests()
+                .antMatchers("/login", "/add").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic()
-                .authenticationEntryPoint(authEntryPoint);
-
+                .and()
+                .csrf()
+                .disable();
     }
-
-    @Override
-    protected void configure(final AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.jdbcAuthentication().dataSource(driverManagerDataSource())
-                .usersByUsernameQuery("select login, password, enabled from user where login =?")
-                .authoritiesByUsernameQuery("select login, user_role from user where login=?")
-                .passwordEncoder(passwordEncoder());
-    }
-
-
-
 }
